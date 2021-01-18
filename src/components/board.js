@@ -16,24 +16,32 @@ const StyledBoard = styled.div`
 
 function Board(props) {
   const [popup, setPopup] = useState(false);
-  let history = useHistory;
+  const [question, setQuestion] = useState({})
+  const { push } = useHistory;
+
+  function getQuestion(idx) {
+    setQuestion(props.questions[idx])
+  }
+
   if (props.questions) {
     return (
       <StyledBoard>
-        {props.questions.map((question, idx) => {
+        {props.questions.map((question, index) => {
           return (
           <Question 
-            key={idx}
-            id={idx}
+            key={index}
+            idx={index}
             question={question.question}
             category={question.category.title}
             value={question.value}
             setPopup={setPopup}
+            getQuestion={getQuestion}
            /> 
         )})}
         <AnswerForm 
           popup={popup}
           setPopup={setPopup}
+          question={question}
         />
       </StyledBoard>
     )

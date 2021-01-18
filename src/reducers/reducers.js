@@ -1,7 +1,8 @@
 import {NEW_Q, LOAD_BOARD} from "../actions/actions";
 
 const initialState = {
-  questions: []
+  questions: [],
+  currentQ: {},
 };
 
 const reducer = (state = initialState, action) => {

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledQ = styled.div`
@@ -26,60 +26,60 @@ const StyledQ = styled.div`
   .display {
     display: inherit;
   }
-`
+`;
 
 export default function Question(props) {
   const [display, setDisplay] = useState(false);
 
-  const {question, category, value, setPopup, id} = props;
+  const { question, category, value, setPopup, idx, getQuestion } = props;
 
   let numVal = Number(value);
   let img = "";
   let alt = "";
   function sortPictures() {
-      if (numVal <= 200) {
-      img = 'assets/baby.jpg'
-      alt = "baby leopard"
+    if (numVal <= 200) {
+      img = "assets/baby.jpg";
+      alt = "baby leopard";
     }
     else if (numVal <= 400) {
-      img = 'assets/lick.jpg'
-      alt = "leopard mlem"
+      img = "assets/lick.jpg";
+      alt = "leopard mlem";
     }
     else if (numVal <= 600) {
-      img = 'assets/lookin-at-you.jpg'
-      alt = "leopard looking at camera with mouth open"
+      img = "assets/lookin-at-you.jpg";
+      alt = "leopard looking at camera with mouth open";
     }
     else if (numVal <= 800) {
-      img = 'assets/snow-leopard.jpg'
-      alt = "snow leopard with ears drawn back and teeth out"
+      img = "assets/snow-leopard.jpg";
+      alt = "snow leopard with ears drawn back and teeth out";
     }
     else {
-      img = 'assets/rawr.jpg'
-      alt = "leopard with scrunched up snout and mouth open"
+      img = "assets/rawr.jpg";
+      alt = "leopard with scrunched up snout and mouth open";
     }
   }
 
   function selectQuestion(e) {
-    if(!display) {
+    if (!display) {
       setDisplay(true);
       setPopup(true);
-      console.log(e.target.parentNode.classList[0])
+      getQuestion(idx)
+      console.log(e.target.parentNode.classList[0]);
     }
-   
   }
 
   sortPictures();
   return (
-    <StyledQ id={id} onClick={e=>{selectQuestion(e)}}>
-      <div className={id}>
-        <img 
-          src={display ? "" : `${img}` } 
-          alt={display ? "" : alt} 
-          className={display ? "": `display`}
+    <StyledQ id={idx} onClick={e => { selectQuestion(e) }}>
+      <div className={idx}>
+        <img
+          src={display ? "" : `${img}`}
+          alt={display ? "" : alt}
+          className={display ? "" : "display"}
         />
-        <h3 className={display ? `display`: ""}>{category}</h3>
-        <p className={display ? `display`: ""}>{question}</p>
+        <h3 className={display ? "display" : ""}>{category}</h3>
+        <p className={display ? "display" : ""}>{question}</p>
       </div>
     </StyledQ>
-  )
+  );
 }
