@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { updateScore } from "../actions/actions";
 
 const StyledForm = styled.form`
   font-size: 1.3rem;
   font-weight: bold;
   text-align: center;
   .answer-form {
+    visibility: hidden;
     width: 100vw;
     height: 100vh;
     z-index: 2;
@@ -39,13 +42,15 @@ const StyledForm = styled.form`
   }
 `;
 
-export default function AnswerForm(props) {
+function AnswerForm(props) {
   const [input, setInput] = useState("");
   const [popupType, setPopupType] = useState("q");
   const { popup, setPopup, question } = props;
+  console.log(props)
+
   useEffect(() => {
-    setPopupType("q")
-  }, [question])
+    setPopupType("q");
+  }, [question]);
 
   function changeHandler(e) {
     setInput(e.target.value);
@@ -53,14 +58,17 @@ export default function AnswerForm(props) {
   function submitHandler(e) {
     e.preventDefault();
     setPopupType(false);
-    setInput("")
+    setInput("");
     if (question.answer == input) {
       setPopupType("correct");
+      props.updateScore(Number(question.value))
     }
     else {
       setPopupType("incorrect");
+      props.updateScore(-Number(question.value));
     }
   }
+  console.log(popup)
   return (//styled components class will override custom classes
     //answer-form div is to prevent click on other boxes until answered
     <StyledForm onSubmit={submitHandler}>
@@ -94,3 +102,4 @@ export default function AnswerForm(props) {
     </StyledForm>
   );
 }
+export default connect((state) => { return { score: state.score }; }, { updateScore })(AnswerForm);

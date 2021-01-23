@@ -1,7 +1,7 @@
-associate question with submit function
-  -regex answer
+regex answer and strip <> tags
 how to trigger end of game?
-keep score
+select difficulty?
+style
 
 credits:
 baby Image by <a href="https://pixabay.com/users/gatterwe-37534/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3523424">simone gatterwe</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3523424">Pixabay</a>

@@ -1,13 +1,14 @@
-import {NEW_Q, LOAD_BOARD} from "../actions/actions";
+import {LOAD_BOARD, UPDATE_SCORE} from "../actions/actions";
 
 const initialState = {
   questions: [],
-  currentQ: {},
+  score: 0
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_BOARD: 
+    case LOAD_BOARD:
+      console.log("payload", action.payload)
       let fullQuestions = action.payload.filter(question => question.question !== ""); //filters out empty questions
       for(let i = fullQuestions.length - 1; i > 0; i--){ //randomize array because api only picks a random spot then sends x number in a row 
         const j = Math.floor(Math.random() * i);
@@ -16,9 +17,11 @@ const reducer = (state = initialState, action) => {
         fullQuestions[j] = temp;
       }
       let gameSet = fullQuestions.slice(0, 30);
-      return {...state, questions: gameSet};
-    case NEW_Q: 
-      return state;
+      return {...state, score: 0, questions: gameSet};
+    case UPDATE_SCORE:
+      let new_score = state.score
+      new_score += action.payload
+      return {...state, score: new_score}
     default: return state;
   }
 }

@@ -1,17 +1,18 @@
 import axios from "axios";
+import sampleQuestions from "../data/sampledata";
 
 export const LOAD_BOARD = "LOAD_BOARD";
-export const NEW_Q = "NEW_QUESTION";
+export const UPDATE_SCORE = "UPDATE_SCORE";
 
 export const loadBoard = (num) => dispatch => {
-  return axios.get(`http://jservice.io/api/random/?count=${num}`)
-    .then(res=> {
-      const action = {type: LOAD_BOARD, payload: res.data}
-      dispatch(action);
-    })
-    .catch(err=>console.log(err));
+  // return axios.get(`http://jservice.io/api/random/?count=${num}`)
+  //   .then(res=> {
+  //     dispatch({type: LOAD_BOARD, payload: res.data});
+  //   })
+  //   .catch(err=>console.log(err));
+  return dispatch({type: LOAD_BOARD, payload: sampleQuestions});
 }
 
-export const newQuestion = value => {
-  return {type: NEW_Q, payload: value};
+export const updateScore = (value) => dispatch => {
+  return dispatch({type: UPDATE_SCORE, payload: value});
 }
