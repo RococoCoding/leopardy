@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { updateScore } from "../actions/actions";
+import { updateScore, updateAnswered } from "../actions/actions";
 
 const StyledForm = styled.form`
   font-size: 1.3rem;
@@ -45,34 +45,35 @@ const StyledForm = styled.form`
 function AnswerForm(props) {
   const [input, setInput] = useState("");
   const [popupType, setPopupType] = useState("q");
-  const { popup, setPopup, question } = props;
-  console.log(props)
+  const { popup, question } = props;
 
   useEffect(() => {
     setPopupType("q");
   }, [question]);
 
   function changeHandler(e) {
-    setInput(e.target.value);
+    setInput(e.target.value.trim());
   }
   function submitHandler(e) {
     e.preventDefault();
     setPopupType(false);
     setInput("");
-    if (question.answer == input) {
-      setPopupType("correct");
-      props.updateScore(Number(question.value))
-    }
-    else {
+    let regexInput = new RegExp(input, "i");
+    let regexResult = question.answer.match(regexInput);
+    if (!regexResult || regexResult.input !== regexResult[0]) {
       setPopupType("incorrect");
       props.updateScore(-Number(question.value));
     }
+    else {
+      setPopupType("correct");
+      props.updateScore(Number(question.value));
+    }
+    props.updateAnswered(props.answered+1)
   }
-  console.log(popup)
   return (//styled components class will override custom classes
     //answer-form div is to prevent click on other boxes until answered
     <StyledForm onSubmit={submitHandler}>
-      {popupType == "q" &&
+      {popupType === "q" &&
         <div className={popup ? "display answer-form" : "answer-form"}>
           <div className="answer-input">
             <label htmlFor="answer">Who is/are... | What is/are...
@@ -89,12 +90,12 @@ function AnswerForm(props) {
           </div>
         </div>
       }
-      {popupType == "correct" &&
+      {popupType === "correct" &&
         <div className="in-correct">
           "Your answer was correct!"
         </div>
       }
-      {popupType == "incorrect" &&
+      {popupType === "incorrect" &&
         <div className="in-correct">
           Sorry! The correct answer is: {`${question.answer}`}
         </div>
@@ -102,4 +103,4 @@ function AnswerForm(props) {
     </StyledForm>
   );
 }
-export default connect((state) => { return { score: state.score }; }, { updateScore })(AnswerForm);
+export default connect((state) => { return { score: state.score, answered: state.answered }; }, { updateScore, updateAnswered })(AnswerForm);

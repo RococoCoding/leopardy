@@ -28,6 +28,10 @@ function App(props) {
           <Board round={"round1"} />
         </Route>
         <Route path='/'>
+          {props.answered ? 
+          <p>You won ${props.score}! Would you like to play again?</p> :
+          ""
+        }
           <button onClick={() => {
             history.push('/round1');
             props.loadBoard(50);
@@ -38,4 +42,4 @@ function App(props) {
   );
 }
 
-export default connect(() => ({}), { loadBoard })(App);
+export default connect((state) => ({score: state.score, answered: state.answered}), { loadBoard })(App);

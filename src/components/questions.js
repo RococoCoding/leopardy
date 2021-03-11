@@ -63,14 +63,14 @@ export default function Question(props) {
     if (!display) {
       setDisplay(true);
       setPopup(true);
-      getQuestion(idx)
+      getQuestion(idx);
       console.log(e.target.parentNode.classList[0]);
     }
   }
 
   sortPictures();
   return (
-    <StyledQ id={idx} onClick={e => { selectQuestion(e) }}>
+    <StyledQ id={idx} onClick={e => { selectQuestion(e); }}>
       <div className={idx}>
         <img
           src={display ? "" : `${img}`}

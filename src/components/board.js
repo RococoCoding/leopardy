@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import Question from "./questions";
 import AnswerForm from './answerForm';
 import Score from "./score";
@@ -20,7 +19,6 @@ const StyledBoard = styled.div`
 function Board(props) {
   const [popup, setPopup] = useState(false);
   const [question, setQuestion] = useState({});
-  const { push } = useHistory;
 
   function getQuestion(idx) {
     setQuestion(props.questions[idx]);

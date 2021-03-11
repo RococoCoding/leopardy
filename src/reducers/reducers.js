@@ -1,30 +1,35 @@
-import {LOAD_BOARD, UPDATE_SCORE} from "../actions/actions";
+import { LOAD_BOARD, UPDATE_SCORE, UPDATE_ANSWERED } from "../actions/actions";
 
 const initialState = {
   questions: [],
-  score: 0
+  score: 0,
+  answered: 0
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_BOARD:
-      console.log("payload", action.payload)
-      let fullQuestions = action.payload.filter(question => question.question !== ""); //filters out empty questions
-      for(let i = fullQuestions.length - 1; i > 0; i--){ //randomize array because api only picks a random spot then sends x number in a row 
+      //filters out empty questions
+      let fullQuestions = action.payload.filter(question => question.question !== ""); 
+      //randomize array because api only picks a random spot then sends x number in a row 
+      for (let i = fullQuestions.length - 1; i > 0; i--) { 
         const j = Math.floor(Math.random() * i);
         const temp = fullQuestions[i];
         fullQuestions[i] = fullQuestions[j];
         fullQuestions[j] = temp;
       }
+      //gets 30 questions for the board (had to load extra from the API because some questions are empty)
       let gameSet = fullQuestions.slice(0, 30);
-      return {...state, score: 0, questions: gameSet};
+      return { ...state, score: 0, questions: gameSet };
     case UPDATE_SCORE:
-      let new_score = state.score
-      new_score += action.payload
-      return {...state, score: new_score}
+      let new_score = state.score;
+      new_score += action.payload;
+      return { ...state, score: new_score };
+    case UPDATE_ANSWERED:
+      return {...state, answered: action.payload}
     default: return state;
   }
-}
+};
 
 export default reducer;
 
