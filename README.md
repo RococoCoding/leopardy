@@ -1,5 +1,5 @@
 # Leopardy!
-**Timeline**: Ongoing 
+**Timeline**: Ongoing  
 **Tech**: HTML, CSS, JS, React, Redux, Node, Express, Python, Postgres  
 **Description**: Leopard-themed trivia game    
 **Contribution Type**: Personal project  
